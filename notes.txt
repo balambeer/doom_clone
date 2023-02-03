@@ -1,0 +1,13 @@
+FEATURES TO ADD?
+
+Implementation:
+- Change the sprite handling to use rectangles: find the bottom of the sprite (where it is on the ground). Should be easy enough.
+
+Gameplay:
+- Random map generation
+- Multiple enemy types
+- Object pickup?
+
+Building a library:
+- Rectangle collisions for building buttons? Write a button class?
+- Put all of this on github
