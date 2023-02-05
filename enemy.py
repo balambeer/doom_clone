@@ -20,8 +20,8 @@ class Enemy(SpriteAgent):
                  color,
                  default_image_path,
                  animation_time,
-                 image_scale,
-                 vertical_shift):
+                 height,
+                 eyeline_ratio):
             super().__init__(game,
                              starting_pos,
                              enemy_speed,
@@ -30,8 +30,8 @@ class Enemy(SpriteAgent):
                              color,
                              default_image_path,
                              animation_time,
-                             image_scale,
-                             vertical_shift)
+                             height,
+                             eyeline_ratio)
             self.damage = damage
             self.range = random.uniform(min_range, max_range)
             self.accuracy = accuracy
@@ -236,8 +236,8 @@ class Soldier(Enemy):
                  color = 'red',
                  default_image_path = "resources/sprites/soldier",
                  animation_time = 120,
-                 image_scale = 0.6,
-                 vertical_shift = 0.38):
+                 height = 0.6,
+                 eyeline_ratio = 0.9):
         super().__init__(game,
                          enemy_id,
                          starting_pos,
@@ -254,6 +254,6 @@ class Soldier(Enemy):
                          color,
                          default_image_path,
                          animation_time,
-                         image_scale,
-                         vertical_shift)
+                         height,
+                         eyeline_ratio)
         print('Log: Spawned Soldier %1d at (%2d, %2d)' % (self.enemy_id, self.x, self.y))

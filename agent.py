@@ -84,8 +84,8 @@ class SpriteAgent(Agent):
                  color,
                  main_folder_path,
                  animation_time,
-                 scale,
-                 vertical_shift):
+                 height,
+                 eyeline_ratio):
         super().__init__(game, starting_pos, agent_speed, starting_health, size, color)
         self.main_folder = main_folder_path
         # self.current_animation_images = self.get_images(self.main_folder) # pg.image.load(default_image_path).convert_alpha()
@@ -97,8 +97,8 @@ class SpriteAgent(Agent):
         self.image_ratio = self.image_width / self.image_height
         # self.main_folder = default_image_path.rsplit('/', 1)[0]
         
-        self.scale = scale
-        self.vertical_shift = vertical_shift
+        self.height = height
+        self.eyeline_ratio = eyeline_ratio
         
         self.screen_x_3d = 0
         self.screen_y_3d = 0
@@ -137,7 +137,7 @@ class SpriteAgent(Agent):
             
             if -self.image_half_width < self.screen_x_3d < (settings.screen_width + self.image_half_width):
             
-                projection_height = settings.screen_dist / distance * self.scale
+                projection_height = settings.screen_dist / distance * self.height
                 projection_width = projection_height * self.image_ratio
                 
                 # print("Log: projection_width = %4.3f" % projection_width)
@@ -146,8 +146,8 @@ class SpriteAgent(Agent):
                 image = pg.transform.scale(self.image, (projection_width, projection_height))
                 
                 self.sprite_half_width = projection_width // 2
-                height_shift = self.vertical_shift * projection_height
-                position = self.screen_x_3d - self.sprite_half_width, settings.screen_half_height - projection_height // 2 + height_shift
+                height_shift = self.eyeline_ratio * projection_height
+                position = self.screen_x_3d - self.sprite_half_width, settings.screen_half_height - projection_height + height_shift
             
                 # print("Log: position = (%4.3f, %4.3f)" % position)
             
