@@ -12,8 +12,9 @@ class EnemyHandler:
         self.get_enemies()
         
     def get_enemies(self):
-        num_enemies = random.randint(settings.enemy_count_min, settings.enemy_count_max)
         possible_locations = self.game.map.empty_spaces
+        num_enemies = random.randint(max(1, int(settings.enemy_density * len(possible_locations)) - 1),
+                                     int(settings.enemy_density * len(possible_locations)) + 1)
         # print(possible_locations)
         # possible_locations.remove((int(settings.player_starting_position[0]), int(settings.player_starting_position[1])))
         possible_locations.remove(self.game.player_starting_pos)

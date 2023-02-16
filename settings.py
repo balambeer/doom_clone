@@ -23,8 +23,7 @@ player_size = 0.2
 player_color = 'green'
 
 # Enemies
-enemy_count_min = 6
-enemy_count_max = 8
+enemy_density = 0.1
 enemies_inactive = False
 
 # 3d rendering
