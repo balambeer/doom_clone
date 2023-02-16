@@ -50,10 +50,10 @@ class RandomMap:
         print("Log: room layout:")
         print(self.rooms)
         print(self.corridors)
-        
-        print('Log: Generated random map:')
-        for row in self.generated_map:
-            print(row)
+#         
+#         print('Log: Generated random map:')
+#         for row in self.generated_map:
+#             print(row)
         
     # Empty map
     def generate_empty_map(self):
@@ -185,15 +185,27 @@ class RandomMap:
         start_point = corridor[0]
         end_point = corridor[1]
         
+        print("Log: carving corridor (%i, %i) to (%i, %i)" % (corridor[0][0], corridor[0][1], corridor[1][0], corridor[1][1]))
+        
         if random.random() < 0.5:
-            for i in range(start_point[0], end_point[0] + 1):
+            print("  Carving vertcally first")
+            lower_index = min(start_point[0], end_point[0])
+            higher_index = max(start_point[0], end_point[0])
+            for i in range(lower_index, higher_index + 1):
                 self.generated_map[i][start_point[1]] = 0
-            for j in range(start_point[1], end_point[1] + 1):
+            lower_index = min(start_point[1], end_point[1])
+            higher_index = max(start_point[1], end_point[1])
+            for j in range(lower_index, higher_index + 1):
                 self.generated_map[end_point[0]][j] = 0
         else:
-            for j in range(start_point[1], end_point[1] + 1):
+            print("  Carving horizontally first")
+            lower_index = min(start_point[1], end_point[1])
+            higher_index = max(start_point[1], end_point[1])
+            for j in range(lower_index, higher_index + 1):
                 self.generated_map[start_point[0]][j] = 0
-            for i in range(start_point[0], end_point[0] + 1):
+            lower_index = min(start_point[0], end_point[0])
+            higher_index = max(start_point[0], end_point[0])
+            for i in range(lower_index, higher_index + 1):
                 self.generated_map[i][end_point[1]] = 0
                 
     def carve_corridors(self):

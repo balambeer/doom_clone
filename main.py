@@ -31,17 +31,18 @@ class Game:
         self.clock = pg.time.Clock()
         self.delta_time = 0
         
-        self.map = Map(self)
+        self.map = Map(self, True)
+
         self.pathfinding = PathFinding(self)
         self.sound = Sound(self)
         
         self.shotgun = Shotgun(self, self.sound.shotgun)
         self.sword = Sword(self, self.sound.sword)
         
-        player_starting_pos = random.choice(self.map.empty_spaces)
+        self.player_starting_pos = random.choice(self.map.empty_spaces)
         player_starting_anlge = math.tau * random.random()
         self.player = Player(self,
-                             (player_starting_pos[0] + 0.51, player_starting_pos[1] + 0.51),
+                             (self.player_starting_pos[0] + 0.51, self.player_starting_pos[1] + 0.51),
                              player_starting_anlge,
                              settings.player_speed,
                              settings.player_starting_health,

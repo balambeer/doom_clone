@@ -16,7 +16,6 @@ mouse_sensitivity = 0.0003
 mouse_max_rotation = 40
 
 # Player
-player_starting_position = 1.5, 5
 player_starting_angle = 0.3
 player_speed = 0.004
 player_starting_health = 100
@@ -42,3 +41,11 @@ font_size = screen_height // 10
 health_hud_color = "gray"
 health_hud_offset = int(1.5 * font_size)
 health_hud_position = (health_hud_offset, screen_height - health_hud_offset)
+
+# random map
+room_block_rows = 2
+room_block_cols = 3
+room_block_width = 10
+room_block_height = 10
+n_wall_textures = 4
+decorator_density = 0.04

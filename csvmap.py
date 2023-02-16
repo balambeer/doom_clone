@@ -1,9 +1,11 @@
 import csv
 import pygame as pg
 import settings
+from random_map import *
 
 class Map:
     def __init__(self, game,
+                 generate_random_map,
                  path = 'maps/tutorial.csv'):
         self.path = path
         self.game = game
@@ -18,25 +20,43 @@ class Map:
         self.offset_x = 0
         self.offset_y = 0
         
-        self.readLevelMap()
+        if generate_random_map:
+            self.generate_random_map()
+        else:
+            self.read_csv_map()
+        self.process_mini_map()
         self.get_walls_and_empty_spaces()
 
-    def readLevelMap(self):
-        mini_map = []
+    def read_csv_map(self):
+        csv_map = []
         with open(self.path) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
             for row in csv_reader:
-                mini_map.append(row)
-        n_rows, n_cols = len(mini_map), len(mini_map[0])
+                csv_map.append(row)
+        
+        n_rows = len(csv_map)
+        n_cols = len(csv_map[0])
         for i in range(n_rows):
             for j in range(n_cols):
-                mini_map[i][j] = int(mini_map[i][j])
+                csv_map[i][j] = int(csv_map[i][j])
         
-        self.mini_map = mini_map
-        self.n_rows = n_rows
-        self.n_cols = n_cols
+        self.mini_map = csv_map
         
-        self.tile_size_2d = min(settings.screen_width // n_cols, settings.screen_height // n_rows)
+    def generate_random_map(self):
+        random_map = RandomMap(settings.room_block_rows,
+                               settings.room_block_cols,
+                               settings.room_block_width,
+                               settings.room_block_height,
+                               settings.n_wall_textures,
+                               settings.decorator_density)
+        
+        self.mini_map = random_map.generated_map
+        
+    def process_mini_map(self):
+        self.n_rows = len(self.mini_map)
+        self.n_cols = len(self.mini_map[0])
+        
+        self.tile_size_2d = min(settings.screen_width // self.n_cols, settings.screen_height // self.n_rows)
         self.offset_x = (settings.screen_width % self.tile_size_2d) // 2
         self.offset_y = (settings.screen_height % self.tile_size_2d) // 2
         

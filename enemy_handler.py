@@ -15,7 +15,8 @@ class EnemyHandler:
         num_enemies = random.randint(settings.enemy_count_min, settings.enemy_count_max)
         possible_locations = self.game.map.empty_spaces
         # print(possible_locations)
-        possible_locations.remove((int(settings.player_starting_position[0]), int(settings.player_starting_position[1])))
+        # possible_locations.remove((int(settings.player_starting_position[0]), int(settings.player_starting_position[1])))
+        possible_locations.remove(self.game.player_starting_pos)
         
         for i in range(num_enemies):
             enemy_tile = random.choice(possible_locations)

@@ -1,8 +1,9 @@
 FEATURES TO ADD?
 
 Implementation:
-- Change the sprite handling to use rectangles: find the bottom of the sprite (where it is on the ground). Should be easy enough.
+- Change the sprite handling to use rectangles: find the bottom of the sprite (where it is on the ground). SKIP: dwaring sprites would not be compatible with the rest of the drawing, and I don't want to change that now.
 - Add ability to look up/down slightly
+- Do I need to do garbage collection myself?
 
 Gameplay:
 - Random map generation
@@ -11,4 +12,3 @@ Gameplay:
 
 Building a library:
 - Rectangle collisions for building buttons? Write a button class?
-- Put all of this on github
