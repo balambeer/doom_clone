@@ -14,6 +14,8 @@ class Player(Agent):
                  starting_weapon):
         super().__init__(game, starting_pos, player_speed, starting_health, size, color)
         self.angle = starting_angle
+        self.vertical_angle = 0
+        self.vertical_offsett = 0
         self.weapon = starting_weapon
         self.damage_list = []
         
@@ -23,7 +25,7 @@ class Player(Agent):
         
         self.health_hud = self.game.font.render('%3d' % self.health, False, settings.health_hud_color)
 
-        print('Log: Spawned Player at position (%2.1f, %2.1f).' % (self.x, self.y))
+        # print('Log: Spawned Player at position (%2.1f, %2.1f).' % (self.x, self.y))
         
     # movement controls
     def movement2d(self):
@@ -73,16 +75,25 @@ class Player(Agent):
         # print('Log: mouse position = %4.3f, %4.3f' % (mx, my))
         if mx < settings.mouse_border_left or mx > settings.mouse_border_right:
             pg.mouse.set_pos([settings.screen_half_width, settings.screen_half_height])
-        self.rotation = pg.mouse.get_rel()[0]
-        self.rotation = max(-settings.mouse_max_rotation, min(settings.mouse_max_rotation, self.rotation))
+        if my > settings.mouse_border_bottom or my < settings.mouse_border_top:
+            pg.mouse.set_pos([settings.screen_half_width, settings.screen_half_height])
+        mouse_movement = pg.mouse.get_rel()
+        self.rotation = max(-settings.mouse_max_rotation, min(settings.mouse_max_rotation, mouse_movement[0]))
         self.angle += self.rotation * settings.mouse_sensitivity * self.game.delta_time
+        self.vertical_angle += -mouse_movement[1] * settings.mouse_sensitivity
 
         self.angle = self.angle % math.tau
+        self.vertical_angle = max(-settings.player_vertical_angle_limit,
+                                  min(settings.player_vertical_angle_limit,
+                                      self.vertical_angle))
+        print("Log: player angle vert = %.3f" % self.vertical_angle)
+        
+        self.vertical_offset = int(settings.screen_dist * math.tan(self.vertical_angle))
         
     def listen_to_weapon(self):
         left_button_pressed = pg.mouse.get_pressed()[0]
         if left_button_pressed and self.weapon.ready_to_use:
-            print("Log: weapon attacked")
+            # print("Log: weapon attacked")
             self.weapon.attacked = True
         # Change weapon
         keys = pg.key.get_pressed()

@@ -15,7 +15,7 @@ class ObjectRenderer():
         # walls
         self.wall_pieces = []
         # sky
-        self.sky_image = self.get_texture('resources/textures/sky.png', (settings.screen_width, settings.screen_half_height))
+        self.sky_image = self.get_texture('resources/textures/sky.png', (settings.screen_width, settings.screen_half_height + settings.max_vertical_offset))
         self.sky_offset = 0
         
         self.objects_to_render = []
@@ -40,7 +40,7 @@ class ObjectRenderer():
                           self.scale,
                           wall_piece.projection_height))
             
-    def render_walls_3d_textured(self):
+    def render_walls_3d_textured(self, vertical_offset):
         self.get_wall_pieces_to_render()
         for index, wall_piece in enumerate(self.wall_pieces):
             
@@ -52,29 +52,41 @@ class ObjectRenderer():
                         settings.texture_size 
                     )
                 wall_column = pg.transform.scale(wall_column, (self.scale, wall_piece.projection_height))
-                wall_position = (index * self.scale, settings.screen_half_height - wall_piece.projection_height // 2)
+                wall_position = (index * self.scale,
+                                 settings.screen_half_height - wall_piece.projection_height // 2 + vertical_offset)
             else:
-                texture_height = settings.texture_size * settings.screen_height / wall_piece.projection_height
+                texture_height_visible_max = int(settings.texture_size * settings.screen_height / wall_piece.projection_height)
+                vertical_offset_in_texture = int(wall_piece.depth / settings.screen_dist * vertical_offset * settings.texture_size)
+                texture_top = max(0, settings.half_texture_size - texture_height_visible_max // 2 - vertical_offset_in_texture)
+                texture_height = min(settings.texture_size - texture_top, settings.half_texture_size + texture_height_visible_max // 2 - vertical_offset_in_texture)
+                
                 wall_column = self.wall_textures[wall_piece.texture].subsurface(
                         wall_piece.image_offset * (settings.texture_size - self.scale),
-                        settings.half_texture_size - texture_height // 2,
+                        texture_top,
                         self.scale,
                         texture_height
                     )
-                wall_column = pg.transform.scale(wall_column, (self.scale, settings.screen_height))
-                wall_position = (index * self.scale, 0)
+                wall_column = pg.transform.scale(wall_column, (self.scale, settings.screen_height * texture_height / texture_height_visible_max))
+                if vertical_offset > 0 and texture_top == 0:
+                    close_offset = int(settings.screen_height * (1 - texture_height / texture_height_visible_max))
+                else:
+                    close_offset = 0
+                wall_position = (index * self.scale, close_offset)
                 
             self.objects_to_render.append((wall_piece.depth, wall_column, wall_position))
           
     # Background
-    def draw_background(self):
+    def draw_background(self, vertical_offset):
         # sky
         self.sky_offset = (self.sky_offset + 4.0 * self.game.player.rotation) % settings.screen_width
-        self.game.screen.blit(self.sky_image, (-self.sky_offset, 0))
-        self.game.screen.blit(self.sky_image, (-self.sky_offset + settings.screen_width, 0))
+        self.game.screen.blit(self.sky_image, (-self.sky_offset,
+                                               vertical_offset - settings.max_vertical_offset))
+        self.game.screen.blit(self.sky_image, (-self.sky_offset + settings.screen_width,
+                                               vertical_offset - settings.max_vertical_offset))
         # floor
         floor_color = (30, 30, 30)
-        pg.draw.rect(self.game.screen, floor_color, (0, settings.screen_half_height, settings.screen_width, settings.screen_height))
+        pg.draw.rect(self.game.screen, floor_color, (0, settings.screen_half_height + vertical_offset,
+                                                     settings.screen_width, settings.screen_height))
             
     # Sprites
     def render_enemies(self):
@@ -92,10 +104,12 @@ class ObjectRenderer():
                 self.objects_to_render.append(sprite_rendering_info)
     
     def render_3d(self):
-        self.draw_background()
+        print("Log: vertical offset = %i" % self.game.player.vertical_offset)
+        
+        self.draw_background(self.game.player.vertical_offset)
         
         self.objects_to_render = []
-        self.render_walls_3d_textured()
+        self.render_walls_3d_textured(self.game.player.vertical_offset)
         # print("Log: %3d objects to render" % len(self.objects_to_render))
         self.render_enemies()
         

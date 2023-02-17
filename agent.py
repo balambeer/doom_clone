@@ -147,7 +147,8 @@ class SpriteAgent(Agent):
                 
                 self.sprite_half_width = projection_width // 2
                 height_shift = self.eyeline_ratio * projection_height
-                position = self.screen_x_3d - self.sprite_half_width, settings.screen_half_height - projection_height + height_shift
+                position = (self.screen_x_3d - self.sprite_half_width,
+                            settings.screen_half_height - projection_height + height_shift + player.vertical_offset)
             
                 # print("Log: position = (%4.3f, %4.3f)" % position)
             
