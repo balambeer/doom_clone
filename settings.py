@@ -26,7 +26,7 @@ player_size = 0.2
 player_color = 'green'
 
 # Enemies
-enemy_density = 0.01 # 0.1
+enemy_density = 0.1
 enemies_inactive = False
 
 # 3d rendering
@@ -35,7 +35,6 @@ half_field_of_view = field_of_view / 2
 screen_dist = screen_half_width / math.tan(half_field_of_view)
 
 half_field_of_view_vert = math.atan2(screen_half_height, screen_dist)
-print("Log: half fov vert = %.3f" % half_field_of_view_vert)
 max_vertical_offset = int(screen_dist * math.tan(player_vertical_angle_limit))
 
 # texturing

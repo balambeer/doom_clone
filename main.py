@@ -9,23 +9,26 @@ from weapon import *
 from sound import *
 from pathfinding import *
 from object_renderer import *
+from menu import *
 
 class Game:
     # Constructor
-    def __init__(self, game_mode_2d):
+    def __init__(self):
         pg.init()
-        if not game_mode_2d:
-            pg.mouse.set_visible(False)
         self.screen = pg.display.set_mode(settings.resolution)
         self.font = pg.font.Font(None, settings.font_size)
-        self.game_mode_2d = game_mode_2d
+        self.game_mode_2d = settings.game_mode_2d
         self.game_over = True
+        self.game_over_frames = 0
+        self.menu = Menu(self)
         
-        print("health hud position = (%3d, %3d)" % settings.health_hud_position)
+        # print("health hud position = (%3d, %3d)" % settings.health_hud_position)
         
-        self.new_game()
+        # self.new_game()
         
     def new_game(self):
+        if not self.game_mode_2d:
+            pg.mouse.set_visible(False)
         self.game_over = False
         self.game_over_frames = 0
         self.clock = pg.time.Clock()
@@ -50,7 +53,6 @@ class Game:
                              settings.player_color,
                              self.shotgun)
         self.enemy_handler = EnemyHandler(self)
-        
         self.object_renderer = ObjectRenderer(self)
     
     # Check events
@@ -68,6 +70,7 @@ class Game:
         # print("Log: delta_time = %4.3f" % self.delta_time)
         self.delta_time = self.clock.tick(settings.fps)
         if not self.player.alive or len(self.enemy_handler.enemy_list) == 0:
+            self.menu.update_at_game_over()
             self.game_over = True
             for enemy in self.enemy_handler.dead_enemy_list:
                 self.game_over = self.game_over and (enemy.n_death_images == enemy.death_animation_counter)
@@ -95,32 +98,34 @@ class Game:
         if self.game_mode_2d:
             self.draw2d()
         else:
-            self.draw3d()
+            self.draw3d()        
         
     # main funciton
     def run(self):
         while True:
+            self.check_events()
             if not self.game_over:
-                self.check_events()
                 self.update()
                 self.draw()
             else:
-                if self.player.alive:
-                    game_over_text = self.font.render("You win!", False, "green")
-                else:
-                    game_over_text = self.font.render("You lose!", False, "red")
-                pg.display.flip()
-                self.screen.blit(game_over_text,
-                                 (settings.screen_half_width - game_over_text.get_width() // 2,
-                                  settings.screen_half_height - game_over_text.get_height() // 2))
+#                 if self.player.alive:
+#                     game_over_text = self.font.render("You win!", False, "green")
+#                 else:
+#                     game_over_text = self.font.render("You lose!", False, "red")
+#                 pg.display.flip()
+#                 self.screen.blit(game_over_text,
+#                                  (settings.screen_half_width - game_over_text.get_width() // 2,
+#                                   settings.screen_half_height - game_over_text.get_height() // 2))
                 
                 if self.game_over_frames > 0:
-                    pg.time.wait(4000)
-                    self.new_game()
+                    self.menu.listen_to_inputs()
+                    self.menu.draw()
+#                     pg.time.wait(4000)
+#                     self.new_game()
                 else:
                     self.game_over_frames += 1
             
 if __name__ == '__main__':
-    game = Game(settings.game_mode_2d)
+    game = Game()
     game.run()
 
