@@ -92,6 +92,7 @@ class Game:
         # self.object_renderer.render_walls_3d_simple()
         self.object_renderer.render_3d()
         self.screen.blit(self.player.health_hud, settings.health_hud_position)
+        self.screen.blit(self.player.ammo_hud, settings.ammo_hud_position)
         
     def draw(self):
         pg.display.flip()

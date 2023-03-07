@@ -34,6 +34,9 @@ class Item():
         self.screen_y_3d = 0
         self.sprite_half_width = 0
         
+    def picked_up(self, player):
+        return math.hypot(self.y - player.y, self.x - player.x) < self.size + player.size
+        
     # Code duplication from SpriteAgent
     # Would have done this differently if I knew that I also wanted static objects, but I won't refactor the code now...
     def put_sprite_on_screen(self, player):
@@ -81,7 +84,7 @@ class Ammo(Item):
                  item_type = "ammo",
                  size = 0.1,
                  color = "blue",
-                 image_path = "resources/sprites/items/ammo.jpg",
+                 image_path = "resources/sprites/items/ammo.png",
                  height = 0.1,
                  eyeline_ratio = 4.5):
         super().__init__(game,

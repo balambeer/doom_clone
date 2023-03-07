@@ -24,6 +24,7 @@ class Player(Agent):
         self.multi_kill = 0
         
         self.health_hud = self.game.font.render('%3d' % self.health, False, settings.health_hud_color)
+        self.ammo_hud = self.game.font.render('-', False, settings.ammo_hud_color)
 
         # print('Log: Spawned Player at position (%2.1f, %2.1f).' % (self.x, self.y))
         
@@ -126,6 +127,10 @@ class Player(Agent):
             self.weapon.update()
             self.health_boost()
             self.health_hud = self.game.font.render('%3d' % self.health, False, settings.health_hud_color)
+            if not self.weapon.ammo == float('inf'):
+                self.ammo_hud = self.game.font.render('%3d' % self.weapon.ammo, False, settings.ammo_hud_color)
+            else:
+                self.ammo_hud = self.game.font.render('-', False, settings.ammo_hud_color)
             super().update(self.game.enemy_handler.enemy_list)
         
     # drawing    

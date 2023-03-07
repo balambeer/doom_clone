@@ -1,7 +1,8 @@
 FEATURES TO ADD?
 
 Implementation:
+- 2d-game mode with camera (maybe a button to switch between them?)
 
 Gameplay:
-- Multiple enemy types
-- Object pickup?
+- VIP dude who you have to kill
+- extended menu with rules

@@ -48,9 +48,12 @@ half_texture_size = texture_size // 2
 
 # text
 font_size = screen_height // 10
-health_hud_color = "gray"
+health_hud_color = "firebrick3"
 health_hud_offset = int(1.5 * font_size)
 health_hud_position = (health_hud_offset, screen_height - health_hud_offset)
+ammo_hud_color = "gray"
+ammo_hud_offset = int(1.5 * font_size)
+ammo_hud_position = (screen_width - 3 * ammo_hud_offset, screen_height - ammo_hud_offset)
 
 # random map
 room_block_rows = 2

@@ -44,6 +44,10 @@ class EnemyHandler:
                     self.spawn_item(enemy.position)
         for enemy in self.dead_enemy_list:
             enemy.enemy_death()
+        for item in self.item_list:
+            if item.picked_up(self.game.player):
+                self.game.shotgun.ammo += item.quantity
+                self.item_list.remove(item)
         
     def drawIn2d(self):
         for enemy in self.enemy_list:

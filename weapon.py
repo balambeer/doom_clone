@@ -48,7 +48,7 @@ class Weapon:
         self.sound = sound
         
     def update(self):
-        if self.attacked:
+        if self.attacked and self.ammo > 0:
             self.attack()
             self.attacked = False
         if not self.ready_to_use:
@@ -91,7 +91,7 @@ class Shotgun(Weapon):
                  max_ammo = float('inf'),
                  max_range = float('inf'),
                  angle_tolerance = 0,
-                 ammo = float('inf'),
+                 ammo = 10,
                  sprites_path = "resources/sprites/weapons/shotgun",
                  sprite_scale = 0.2):
         super().__init__(game,
