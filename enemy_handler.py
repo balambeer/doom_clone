@@ -2,14 +2,20 @@ import pygame as pg
 import settings
 import random
 from enemy import *
+from item import *
 
 class EnemyHandler:
     def __init__(self, game):
         self.game = game
         self.enemy_list = []
         self.dead_enemy_list = []
+        self.item_list = []
         
         self.get_enemies()
+        
+    def spawn_item(self, spawn_position):
+        quantity = random.randint(settings.ammo_quantity_min, settings.ammo_quantity_max)
+        self.item_list.append(Ammo(self.game, spawn_position, quantity))
         
     def get_enemies(self):
         possible_locations = self.game.map.empty_spaces
@@ -34,6 +40,8 @@ class EnemyHandler:
                 self.game.player.multi_kill += 1
                 # print("Log: dead enemies:")
                 # print(self.dead_enemy_list)
+                if random.random() < settings.item_spawn_prob:
+                    self.spawn_item(enemy.position)
         for enemy in self.dead_enemy_list:
             enemy.enemy_death()
         

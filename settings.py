@@ -29,6 +29,11 @@ player_color = 'green'
 enemy_density = 0.1
 enemies_inactive = False
 
+# Items
+item_spawn_prob = 0.5
+ammo_quantity_min = 1
+ammo_quantity_max = 3
+
 # 3d rendering
 field_of_view = math.pi / 3
 half_field_of_view = field_of_view / 2

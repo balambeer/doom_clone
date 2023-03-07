@@ -102,6 +102,10 @@ class ObjectRenderer():
             # print("     and position (%4.3f, %4.3f)." % sprite_rendering_info[2])
             if not (sprite_rendering_info is None):
                 self.objects_to_render.append(sprite_rendering_info)
+        for item in self.game.enemy_handler.item_list:
+            sprite_rendering_info = item.put_sprite_on_screen(self.game.player)
+            if not (sprite_rendering_info is None):
+                self.objects_to_render.append(sprite_rendering_info)
     
     def render_3d(self):
         print("Log: vertical offset = %i" % self.game.player.vertical_offset)
