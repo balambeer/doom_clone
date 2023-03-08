@@ -1,8 +1,18 @@
+Doom-style pseudo-3d roguelike shooter. Find and kill the boss on the randomly generated level to win.
+
+Inspired by
+https://www.youtube.com/watch?v=ECqUrT7IdqQ
+https://github.com/StanislavPetrovV/DOOM-style-Game
+
+Assets:
+https://spritedatabase.net/game/760
+
+---
+
 FEATURES TO ADD?
 
 Implementation:
 - 2d-game mode with camera (maybe a button to switch between them?)
 
 Gameplay:
-- VIP dude who you have to kill
 - extended menu with rules
