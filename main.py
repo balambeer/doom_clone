@@ -69,7 +69,7 @@ class Game:
     def update(self):
         # print("Log: delta_time = %4.3f" % self.delta_time)
         self.delta_time = self.clock.tick(settings.fps)
-        if not self.player.alive or len(self.enemy_handler.enemy_list) == 0:
+        if not self.player.alive or self.enemy_handler.is_boss_dead(): #len(self.enemy_handler.enemy_list) == 0:
             self.menu.update_at_game_over()
             self.game_over = True
             for enemy in self.enemy_handler.dead_enemy_list:

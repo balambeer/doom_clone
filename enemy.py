@@ -257,3 +257,52 @@ class Soldier(Enemy):
                          height,
                          eyeline_ratio)
         print('Log: Spawned Soldier %1d at (%2d, %2d)' % (self.enemy_id, self.x, self.y))
+class Boss(Enemy):
+    def __init__(self, game,
+                 enemy_id,
+                 starting_pos,
+                 soldier_speed = 0.003,
+                 starting_health = 100,
+                 damage = 10,
+                 min_range = 3,
+                 max_range = 5,
+                 accuracy = 0.2,
+                 range_boost = 0.2,
+                 attack_speed = 500,
+                 max_seach_distance = 10,
+                 size = 0.2,
+                 color = 'red',
+                 default_image_path = "resources/sprites/boss",
+                 animation_time = 120,
+                 height = 0.6,
+                 eyeline_ratio = 0.9):
+        super().__init__(game,
+                         enemy_id,
+                         starting_pos,
+                         soldier_speed,
+                         starting_health,
+                         damage,
+                         min_range,
+                         max_range,
+                         accuracy,
+                         range_boost,
+                         attack_speed,
+                         max_seach_distance,
+                         size,
+                         color,
+                         default_image_path,
+                         animation_time,
+                         height,
+                         eyeline_ratio)
+        # print('Log: Spawned Boss %1d at (%2d, %2d)' % (self.enemy_id, self.x, self.y))
+
+    def take_damage(self, weapon):
+        if weapon.weapon_type == "blade":
+            self.health -= weapon.damage // 4
+        else:
+            self.health -= weapon.damage
+        self.hit_by_player = False
+        if self.alive:
+            self.game.sound.enemy_pain.play()
+        else:
+            self.game.sound.enemy_death.play()

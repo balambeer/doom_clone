@@ -25,10 +25,21 @@ class EnemyHandler:
         # possible_locations.remove((int(settings.player_starting_position[0]), int(settings.player_starting_position[1])))
         possible_locations.remove(self.game.player_starting_pos)
         
+        boss_tile = random.choice(possible_locations)
+        self.enemy_list.append(Boss(self.game, enemy_id = -1, starting_pos = (boss_tile[0] + 0.5, boss_tile[1] + 0.5)))
+        possible_locations.remove(boss_tile)
         for i in range(num_enemies):
             enemy_tile = random.choice(possible_locations)
             self.enemy_list.append(Soldier(self.game, enemy_id = i, starting_pos = (enemy_tile[0] + 0.5, enemy_tile[1] + 0.5)))
             possible_locations.remove(enemy_tile)
+            
+    def is_boss_dead(self):
+        is_dead = True
+        for enemy in self.enemy_list:
+            if enemy.enemy_id == -1:
+                is_dead = False
+                break
+        return is_dead
         
     def update(self):
         for enemy in self.enemy_list:

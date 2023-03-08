@@ -5,6 +5,7 @@ from collections import deque
 
 class Weapon:
     def __init__(self, game,
+                 weapon_type,
                  cooldown_time,
                  reload_time,
                  damage,
@@ -16,6 +17,8 @@ class Weapon:
                  sprite_scale,
                  sound):
         self.game = game
+        self.weapon_type = weapon_type
+        
         self.cooldown_time = cooldown_time
         self.damage = damage
         self.max_ammo = max_ammo
@@ -85,6 +88,7 @@ class Weapon:
 
 class Shotgun(Weapon):
     def __init__(self, game, sound,
+                 weapon_type = "gun",
                  reload_time = 1000,
                  cooldown_time = 1000,
                  damage = 25,
@@ -95,6 +99,7 @@ class Shotgun(Weapon):
                  sprites_path = "resources/sprites/weapons/shotgun",
                  sprite_scale = 0.2):
         super().__init__(game,
+                         weapon_type,
                          cooldown_time,
                          reload_time,
                          damage,
@@ -108,6 +113,7 @@ class Shotgun(Weapon):
         
 class Sword(Weapon):
     def __init__(self, game, sound,
+                 weapon_type = "blade",
                  reload_time = 500,
                  cooldown_time = 500,
                  damage = 50,
@@ -118,6 +124,7 @@ class Sword(Weapon):
                  sprites_path = "resources/sprites/weapons/sword",
                  sprite_scale = 1.6):
         super().__init__(game,
+                         weapon_type,
                          cooldown_time,
                          reload_time,
                          damage,
