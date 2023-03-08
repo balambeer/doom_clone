@@ -87,7 +87,7 @@ class Player(Agent):
         self.vertical_angle = max(-settings.player_vertical_angle_limit,
                                   min(settings.player_vertical_angle_limit,
                                       self.vertical_angle))
-        print("Log: player angle vert = %.3f" % self.vertical_angle)
+        # print("Log: player angle vert = %.3f" % self.vertical_angle)
         
         self.vertical_offset = int(settings.screen_dist * math.tan(self.vertical_angle))
         

@@ -108,7 +108,7 @@ class ObjectRenderer():
                 self.objects_to_render.append(sprite_rendering_info)
     
     def render_3d(self):
-        print("Log: vertical offset = %i" % self.game.player.vertical_offset)
+        # print("Log: vertical offset = %i" % self.game.player.vertical_offset)
         
         self.draw_background(self.game.player.vertical_offset)
         

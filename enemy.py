@@ -256,7 +256,8 @@ class Soldier(Enemy):
                          animation_time,
                          height,
                          eyeline_ratio)
-        print('Log: Spawned Soldier %1d at (%2d, %2d)' % (self.enemy_id, self.x, self.y))
+        # print('Log: Spawned Soldier %1d at (%2d, %2d)' % (self.enemy_id, self.x, self.y))
+
 class Boss(Enemy):
     def __init__(self, game,
                  enemy_id,

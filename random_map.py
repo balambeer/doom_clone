@@ -24,7 +24,7 @@ class RandomMap:
         
         self.room_block_midpoints = self.get_midpoints()
 #         print("Log: room_block_midpoints:")
-        print(self.room_block_midpoints)
+        # print(self.room_block_midpoints)
         
         self.n_anchor_points = random.randint(self.n_room_blocks - 1, self.n_room_blocks + 1)
         self.row_half_range = self.room_block_height // 4
@@ -47,9 +47,9 @@ class RandomMap:
         self.generated_map = []
         self.generate_map()
         
-        print("Log: room layout:")
-        print(self.rooms)
-        print(self.corridors)
+        # print("Log: room layout:")
+        # print(self.rooms)
+        # print(self.corridors)
 #         
 #         print('Log: Generated random map:')
 #         for row in self.generated_map:
@@ -185,10 +185,10 @@ class RandomMap:
         start_point = corridor[0]
         end_point = corridor[1]
         
-        print("Log: carving corridor (%i, %i) to (%i, %i)" % (corridor[0][0], corridor[0][1], corridor[1][0], corridor[1][1]))
+        # print("Log: carving corridor (%i, %i) to (%i, %i)" % (corridor[0][0], corridor[0][1], corridor[1][0], corridor[1][1]))
         
         if random.random() < 0.5:
-            print("  Carving vertcally first")
+            # print("  Carving vertcally first")
             lower_index = min(start_point[0], end_point[0])
             higher_index = max(start_point[0], end_point[0])
             for i in range(lower_index, higher_index + 1):
@@ -198,7 +198,7 @@ class RandomMap:
             for j in range(lower_index, higher_index + 1):
                 self.generated_map[end_point[0]][j] = 0
         else:
-            print("  Carving horizontally first")
+            # print("  Carving horizontally first")
             lower_index = min(start_point[1], end_point[1])
             higher_index = max(start_point[1], end_point[1])
             for j in range(lower_index, higher_index + 1):

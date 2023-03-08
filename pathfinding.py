@@ -60,6 +60,6 @@ class PathFinding:
                     # The indexes are switched, because on the screen the x-coordinate is the column of the map
                     self.graph[(col_index, row_index)] = self.get_neighbors(col_index, row_index)
                     
-        print("Log: processed graph:")
-        print(self.graph)
+        # print("Log: processed graph:")
+        # print(self.graph)
                     

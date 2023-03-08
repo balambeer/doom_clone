@@ -60,12 +60,12 @@ class Map:
         self.offset_x = (settings.screen_width % self.tile_size_2d) // 2
         self.offset_y = (settings.screen_height % self.tile_size_2d) // 2
         
-        print('Log: Processed mini map:')
+        # print('Log: Processed mini map:')
         for row in self.mini_map:
             print(row)
-        print('  Tile size 2d = %5d' % (self.tile_size_2d))
-        print('  Offset x = %5d' % (self.offset_x))
-        print('  Offset y = %5d' % (self.offset_y))
+        # print('  Tile size 2d = %5d' % (self.tile_size_2d))
+        # print('  Offset x = %5d' % (self.offset_x))
+        # print('  Offset y = %5d' % (self.offset_y))
         
     def get_walls_and_empty_spaces(self):
         for row_index, row in enumerate(self.mini_map):
@@ -75,8 +75,8 @@ class Map:
                 else:
                     self.empty_spaces.append((col_index, row_index))
                     
-        print('Log: Processed walls dictionary:')
-        print(self.walls_dict)
+        # print('Log: Processed walls dictionary:')
+        # print(self.walls_dict)
 
     def drawIn2d(self):
         [
