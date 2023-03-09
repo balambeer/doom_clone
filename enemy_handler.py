@@ -5,8 +5,10 @@ from enemy import *
 from item import *
 
 class EnemyHandler:
-    def __init__(self, game):
+    def __init__(self, game, player_starting_tile):
         self.game = game
+        self.player_starting_tile = player_starting_tile
+        
         self.enemy_list = []
         self.dead_enemy_list = []
         self.item_list = []
@@ -23,7 +25,7 @@ class EnemyHandler:
                                      int(settings.enemy_density * len(possible_locations)) + 1)
         # print(possible_locations)
         # possible_locations.remove((int(settings.player_starting_position[0]), int(settings.player_starting_position[1])))
-        possible_locations.remove(self.game.player_starting_pos)
+        possible_locations.remove(self.player_starting_tile)
         
         boss_tile = random.choice(possible_locations)
         self.enemy_list.append(Boss(self.game, enemy_id = -1, starting_pos = (boss_tile[0] + 0.5, boss_tile[1] + 0.5)))

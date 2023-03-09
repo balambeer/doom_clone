@@ -10,6 +10,7 @@ from sound import *
 from pathfinding import *
 from object_renderer import *
 from menu import *
+from camera_2d import *
 
 class Game:
     # Constructor
@@ -43,17 +44,20 @@ class Game:
         self.shotgun = Shotgun(self, self.sound.shotgun)
         self.sword = Sword(self, self.sound.sword)
         
-        self.player_starting_pos = random.choice(self.map.empty_spaces)
+        player_starting_tile = random.choice(self.map.empty_spaces)
+        player_starting_pos = (player_starting_tile[0] + 0.51, player_starting_tile[1] + 0.51)
+        self.camera = Camera2d(self, player_starting_pos)
         player_starting_anlge = math.tau * random.random()
         self.player = Player(self,
-                             (self.player_starting_pos[0] + 0.51, self.player_starting_pos[1] + 0.51),
+                             player_starting_pos,
                              player_starting_anlge,
                              settings.player_speed,
                              settings.player_starting_health,
                              settings.player_size,
                              settings.player_color,
                              self.shotgun)
-        self.enemy_handler = EnemyHandler(self)
+        
+        self.enemy_handler = EnemyHandler(self, player_starting_tile)
         self.object_renderer = ObjectRenderer(self)
     
     # Check events
@@ -82,11 +86,17 @@ class Game:
 
     # Update screen
     def draw2d(self):
-        self.screen.fill('black')
-        self.map.drawIn2d()
-        self.object_renderer.draw_field_of_view_2d()
-        self.player.drawIn2d()
-        self.enemy_handler.drawIn2d()
+        if settings.use_camera:
+            self.camera.update()
+            self.camera.render_scene()
+        else:
+            self.screen.fill('black')
+            self.map.drawIn2d()
+            self.object_renderer.draw_field_of_view_2d()
+            self.player.drawIn2d()
+            self.enemy_handler.drawIn2d()
+        self.screen.blit(self.player.health_hud, settings.health_hud_position)
+        self.screen.blit(self.player.ammo_hud, settings.ammo_hud_position)
         
     def draw3d(self):
         # self.screen.fill('black')

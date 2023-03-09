@@ -18,7 +18,6 @@ mouse_sensitivity = 0.0003
 mouse_max_rotation = 40
 
 # Player
-# player_starting_angle = 0.3
 player_vertical_angle_limit = 0.1
 player_speed = 0.004
 player_starting_health = 100
@@ -33,6 +32,13 @@ enemies_inactive = False
 item_spawn_prob = 0.5
 ammo_quantity_min = 1
 ammo_quantity_max = 3
+
+# 2d rendering
+camera_fov_width = 15 # measured in nr of map tiles that fit on screen horizontally
+camera_fov_height = (screen_height / screen_width) * camera_fov_width
+wall_line_width = 2
+dead_agent_line_width = 4
+use_camera = True
 
 # 3d rendering
 field_of_view = math.pi / 3

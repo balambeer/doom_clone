@@ -38,8 +38,13 @@ class Agent:
             self.convert_to_screen_position_2d()
         
     def convert_to_screen_position_2d(self):
-        self.screen_x_2d = self.game.map.offset_x + self.x * self.game.map.tile_size_2d
-        self.screen_y_2d = self.game.map.offset_y + self.y * self.game.map.tile_size_2d
+        if settings.use_camera:
+            screen_position = self.game.camera.convert_to_screen_position(self.position)
+            self.screen_x_2d = screen_position[0]
+            self.screen_y_2d = screen_position[1]
+        else:
+            self.screen_x_2d = self.game.map.offset_x + self.x * self.game.map.tile_size_2d
+            self.screen_y_2d = self.game.map.offset_y + self.y * self.game.map.tile_size_2d
         
     # Not taking size into account
     def wall_collision(self, x, y):
