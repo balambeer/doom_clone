@@ -33,7 +33,7 @@ class Button():
             
 class ButtonNewGame(Button):
     def __init__(self, game,
-                 center_position = (0.5, 0.5),
+                 center_position = (0.5, 0.6),
                  text = "New Game",
                  text_color = "khaki2",
                  background_color = "black",
@@ -60,6 +60,21 @@ class Menu():
         self.game_result_text = self.game.font.render(" ", False, "gray")
         self.game_result_text_rect = self.game_result_text.get_rect(center = (0.5 * settings.screen_width, 0.4 * settings.screen_height))
         
+        self.boss_image = pg.image.load("resources/sprites/boss/0.png").convert_alpha()
+        self.boss_image = pg.transform.scale2x(pg.transform.scale2x(self.boss_image))
+        self.boss_image_rect = self.boss_image.get_rect(center = (0.2 * settings.screen_width, 0.5 * settings.screen_height))
+        self.boss_image_caption = self.game.font_small.render("Kill this dude!", False, "gray")
+        self.boss_image_caption_rect = self.boss_image_caption.get_rect(center = (0.2 * settings.screen_width, 0.7 * settings.screen_height))
+        
+        self.rules_title = self.game.font_small.render("Controls:", False, "gray")
+        self.rules_title_rect = self.rules_title.get_rect(center = (0.8 * settings.screen_width, 0.3 * settings.screen_height))
+        self.rules_text = [ self.game.font_small.render("Movement: WASD + mouse", False, "gray"),
+                            self.game.font_small.render("Attack: left mouse", False, "gray"),
+                            self.game.font_small.render("Sword: 1", False, "gray"),
+                            self.game.font_small.render("Shotgun: 2", False, "gray") ]
+        self.rules_text_size = self.rules_text[0].get_height()
+        self.rules_text_top_left = (0.7 * settings.screen_width, 0.4 * settings.screen_height)
+        
         self.new_game_button = ButtonNewGame(self.game)
         
     def draw(self):
@@ -68,6 +83,12 @@ class Menu():
         self.game.screen.blit(self.game_title, self.game_title_rect)
         self.game.screen.blit(self.score_text, self.score_text_rect)
         self.game.screen.blit(self.game_result_text, self.game_result_text_rect)
+        self.game.screen.blit(self.boss_image, self.boss_image_rect)
+        self.game.screen.blit(self.boss_image_caption, self.boss_image_caption_rect)
+        self.game.screen.blit(self.rules_title, self.rules_title_rect)
+        for index, text in enumerate(self.rules_text):
+            self.game.screen.blit(text, (self.rules_text_top_left[0],
+                                         int(self.rules_text_top_left[1] + self.rules_text_size * index * 1.2)))
         self.new_game_button.draw()
         
     def update_at_game_over(self):

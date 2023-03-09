@@ -17,6 +17,7 @@ class Game:
         pg.init()
         self.screen = pg.display.set_mode(settings.resolution)
         self.font = pg.font.Font(None, settings.font_size)
+        self.font_small = pg.font.Font(None, settings.font_size // 2)
         self.game_mode_2d = settings.game_mode_2d
         self.game_over = True
         self.game_over_frames = 0
