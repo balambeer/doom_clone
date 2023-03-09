@@ -272,7 +272,7 @@ class Boss(Enemy):
                  attack_speed = 500,
                  max_seach_distance = 10,
                  size = 0.2,
-                 color = 'red',
+                 color = 'orange',
                  default_image_path = "resources/sprites/boss",
                  animation_time = 120,
                  height = 0.6,

@@ -65,3 +65,5 @@ class EnemyHandler:
             enemy.drawIn2d()
         for enemy in self.dead_enemy_list:
             enemy.drawIn2d()
+        for item in self.item_list:
+            item.drawIn2d()

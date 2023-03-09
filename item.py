@@ -30,6 +30,9 @@ class Item():
         self.height = height
         self.eyeline_ratio = eyeline_ratio
         
+        self.screen_x_2d = 0
+        self.screen_y_2d = 0
+        
         self.screen_x_3d = 0
         self.screen_y_3d = 0
         self.sprite_half_width = 0
@@ -76,13 +79,23 @@ class Item():
                 # print("Log: position = (%4.3f, %4.3f)" % position)
             
                 return (distance, image, position)
+    
+    def convert_to_screen_position_2d(self):
+        self.screen_x_2d = self.game.map.offset_x + self.x * self.game.map.tile_size_2d
+        self.screen_y_2d = self.game.map.offset_y + self.y * self.game.map.tile_size_2d
+    
+    def drawIn2d(self):
+        self.convert_to_screen_position_2d()
+        size = int(self.game.map.tile_size_2d * self.size)
+        pg.draw.rect(self.game.screen, self.color, pg.Rect(self.screen_x_2d - size //2, self.screen_y_2d - size //2,
+                                                           size, size))
             
 class Ammo(Item):
     def __init__(self, game,
                  position,
                  quantity,
                  item_type = "ammo",
-                 size = 0.1,
+                 size = 0.4,
                  color = "blue",
                  image_path = "resources/sprites/items/ammo.png",
                  height = 0.1,
@@ -102,7 +115,7 @@ class Shotgun(Item):
                  position,
                  quantity = 1,
                  item_type = "shotgun",
-                 size = 0.1,
+                 size = 0.4,
                  color = "purple",
                  image_path = "resources/sprites/items/ammo.jpg",
                  height = 0.1,
